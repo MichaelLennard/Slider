@@ -1,0 +1,48 @@
+body {
+  width: 100%;
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+.leftArrow,
+.rightArrow {
+  position: absolute;
+  top: 50%;
+  font-size: 1.6rem;
+  color: black;
+  border: 1px solid black;
+}
+.leftArrow {
+  left: 0;
+}
+
+.active {
+}
+
+.rightArrow {
+  right: 0;
+}
+
+.bulletpoints {
+  top: 0;
+  bottom: 100%;
+}
+
+.slider {
+  width: 100%;
+  margin: 4rem 0;
+}
+.sliderimages {
+  position: relative;
+}
+
+/* .sliderimage {
+} */
+
+.sliderimage img {
+  object-fit: cover;
+  width: 100%;
+}

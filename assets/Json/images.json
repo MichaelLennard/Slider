@@ -1,0 +1,32 @@
+[
+  {
+    "path": "../images/angrywomen.jpg",
+    "title": "Angry Women",
+    "filename": "angrywomen.jpg",
+    "copyright": ""
+  },
+  {
+    "path": "../images/bluehair.jpg",
+    "title": "Women with blue Hair",
+    "filename": "bluehair.jpg",
+    "copyright": ""
+  },
+  {
+    "path": "../images/fire.jpg",
+    "title": "Fire",
+    "filename": "fire.jpg",
+    "copyright": ""
+  },
+  {
+    "path": "../images/pizza.jpg",
+    "title": "Good looking pizza",
+    "filename": "pizza.jpg",
+    "copyright": ""
+  },
+  {
+    "path": "../images/rain.jpg",
+    "title": "Rain drops on window",
+    "filename": "../images/rain.jpg",
+    "copyright": ""
+  }
+]
