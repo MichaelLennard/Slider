@@ -4,7 +4,8 @@ class ImageSlider {
       imageList: slider.querySelector(".imageList"),
       arrowLeft: slider.querySelector(".leftArrow"),
       arrowRight: slider.querySelector(".rightArrow"),
-      dot: slider.querySelectorAll(".dot")
+      dot: slider.querySelectorAll(".dot"),
+      play: slider.querySelector(".play-pause")
     };
 
     this.vars = {
@@ -12,9 +13,8 @@ class ImageSlider {
       currentSlide: 0,
       step: 100 / this.dom.imageList.children.length
     };
-
+    let playing = true;
     const imageListWidth = this.vars.amount * 100;
-    console.log(this.dom.dot);
 
     slider
       .querySelector(".imageList")
@@ -26,11 +26,39 @@ class ImageSlider {
 
     this.dom.arrowLeft.addEventListener("click", this.goLeft.bind(this));
     this.dom.arrowRight.addEventListener("click", this.goRight.bind(this));
+    this.dom.play.addEventListener("click", this.pauseSlideShow.bind(this));
 
-    // this.goRight();
-    setInterval(() => {
+    this.dom.arrowRight.onclick = function() {
+      clearInterval(initautoplay);
+    };
+
+    this.dom.arrowLeft.onclick = function() {
+      clearInterval(initautoplay);
+    };
+
+    this.dom.play.onclick = function() {
+      if (playing) {
+        this.pauseSlideShow();
+      } else {
+        this.playSlideShow();
+      }
+    };
+
+    const initautoplay = setInterval(() => {
       this.goRight();
     }, 1000);
+  }
+
+  pauseSlideShow() {
+    this.dom.play.innerHTML = "Play";
+    this.vars.playing = false;
+    clearInterval(this.initautoplay);
+  }
+
+  playSlideShow() {
+    this.dom.play.innerHTML = "Pause";
+    this.vars.playing = true;
+    setInterval(this.initautoplay);
   }
 
   goLeft(e) {
@@ -81,11 +109,11 @@ class ImageSlider {
 // x .) Magic Numbers variabilisieren
 // x .) über js die variablen im css deklarieren (slide, imagelist)
 // .) buttons verschönern (es soll schön ausschauen..)
-// .) die bulletpoints sind noch nicht da! bei aktivem bild richtigen bulletpoint highlighten,die bulletpoints unten im bild
+// x.) die bulletpoints sind noch nicht da! bei aktivem bild richtigen bulletpoint highlighten,die bulletpoints unten im bild
 // .) die hrefs ('anker' --> #)
 // .) die buttuns links und rechts vom bild einblenden bei hover
-// .) das bild dritteln : links und rechts sind die buttons/arrows , in der mitte ein play/pause button fürs sliden (togglen!)
+// x.) das bild dritteln : links und rechts sind die buttons/arrows , in der mitte ein play/pause button fürs sliden (togglen!)
 // x .) inital autoplay
-// .) beim manuellen sliden wird autoplay auf pause geschalten
+// x.) beim manuellen sliden wird autoplay auf pause geschalten
 // .) HTML wird nicht verändert
 // .) Arrows + Play/Pause sollen Icons sein.
