@@ -1,19 +1,23 @@
 class ImageSlider {
   constructor(slider) {
+    // collecting all important dom elements
     this.dom = {
       imageList: slider.querySelector(".imageList"),
       arrowLeft: slider.querySelector(".leftArrow"),
       arrowRight: slider.querySelector(".rightArrow"),
-      dot: slider.querySelectorAll(".dot"),
+      bulletpoints: slider.querySelector(".bulletpoints"),
+      dots: slider.querySelectorAll(".dot"),
       play: slider.querySelector(".play-pause")
     };
 
+    // collecting all important vars for later usage
     this.vars = {
       amount: this.dom.imageList.children.length,
       currentSlide: 0,
-      step: 100 / this.dom.imageList.children.length
+      step: 100 / this.dom.imageList.children.length,
+      initautoplay: null,
+      interval: 1000
     };
-    let playing = true;
     const imageListWidth = this.vars.amount * 100;
 
     slider
@@ -24,45 +28,68 @@ class ImageSlider {
       slide.style.width = `${this.vars.step}%`;
     });
 
-    this.dom.arrowLeft.addEventListener("click", this.goLeft.bind(this));
-    this.dom.arrowRight.addEventListener("click", this.goRight.bind(this));
-    this.dom.play.addEventListener("click", this.pauseSlideShow.bind(this));
+    this.dom.arrowLeft.addEventListener("click", this.slideLeft.bind(this));
+    this.dom.arrowRight.addEventListener("click", this.slideRight.bind(this));
+    this.dom.play.addEventListener("click", this.toggleSliding.bind(this));
 
-    this.dom.arrowRight.onclick = function() {
-      clearInterval(initautoplay);
-    };
+    this.dom.dots.forEach(dot => {
+      dot.addEventListener("click", this.goToSlide.bind(this));
+    });
 
-    this.dom.arrowLeft.onclick = function() {
-      clearInterval(initautoplay);
-    };
+    // const rightArrowicon = document.createElement("i");
+    // rightArrowicon.className = "fa fa-caret-right 5-x";
+    // this.dom.arrowRight.appendChild(rightArrowicon);
+    // const leftArrowicon = document.createElement("i");
+    // leftArrowicon.className = "fa fa-caret-left 4-x";
+    // this.dom.arrowLeft.appendChild(leftArrowicon);
+    this.dom.arrowLeft.innerHTML =
+      '<i class="fa fa-caret-left fa-4x" aria-hidden="true"></i>';
 
-    this.dom.play.onclick = function() {
-      if (playing) {
-        this.pauseSlideShow();
-      } else {
-        this.playSlideShow();
-      }
-    };
+    this.dom.arrowRight.innerHTML =
+      '<i class="fa fa-caret-right fa-4x" aria-hidden="true"></i>';
 
-    const initautoplay = setInterval(() => {
-      this.goRight();
-    }, 1000);
+    this.startSliding();
   }
 
-  pauseSlideShow() {
-    this.dom.play.innerHTML = "Play";
-    this.vars.playing = false;
-    clearInterval(this.initautoplay);
+  isPlaying() {
+    return this.dom.play.classList.contains("playing");
   }
 
-  playSlideShow() {
-    this.dom.play.innerHTML = "Pause";
-    this.vars.playing = true;
-    setInterval(this.initautoplay);
+  startSliding() {
+    if (!this.isPlaying()) {
+      this.vars.initautoplay = setInterval(() => {
+        this.slideRight();
+      }, this.vars.interval);
+      this.dom.play.classList.add("playing");
+      this.dom.play.innerHTML =
+        '<i class="fa fa-pause fa-3x" aria-hidden="true"></i>';
+    }
   }
 
-  goLeft(e) {
-    e.preventDefault();
+  stopSliding() {
+    if (this.isPlaying()) {
+      clearInterval(this.vars.initautoplay);
+      this.dom.play.classList.remove("playing");
+      this.dom.play.innerHTML =
+        '<i class="fa fa-play fa-3x" aria-hidden="true"></i>';
+    }
+  }
+
+  toggleSliding(event) {
+    if (event !== undefined) {
+      event.preventDefault();
+    }
+
+    if (!this.isPlaying()) {
+      this.startSliding();
+    } else {
+      this.stopSliding();
+    }
+  }
+
+  slideLeft(event) {
+    this._stopOnEvent(event);
+
     --this.vars.currentSlide;
     let newXPosition = 0;
     const result = this.vars.currentSlide * this.vars.step;
@@ -74,11 +101,14 @@ class ImageSlider {
     } else {
       newXPosition = result * -1;
     }
-
     this.dom.imageList.style.transform = `translateX(${newXPosition}%)`;
+
+    this._calculateBulletPoints();
   }
 
-  goRight() {
+  slideRight(event) {
+    this._stopOnEvent(event);
+
     ++this.vars.currentSlide;
     let newXPosition = 0;
     const result = this.vars.currentSlide * this.vars.step;
@@ -90,11 +120,28 @@ class ImageSlider {
     }
     this.dom.imageList.style.transform = `translateX(${newXPosition}%)`;
 
-    for (let i = 0; i < this.dom.dot.length; i++) {
-      this.dom.dot[i].classList.remove("active");
-      if (this.dom.dot[this.vars.currentSlide]) {
-        this.dom.dot[this.vars.currentSlide].classList.add("active");
-      }
+    this._calculateBulletPoints();
+  }
+
+  goToSlide(event) {
+    this._stopOnEvent(event);
+
+    let currentPoint = Array.from(this.dom.dots).indexOf(event.target);
+    this.vars.currentSlide = currentPoint - 1;
+    this.slideRight();
+  }
+
+  _calculateBulletPoints() {
+    this.dom.bulletpoints
+      .querySelector(".dot.active")
+      .classList.remove("active");
+    this.dom.dots[this.vars.currentSlide].classList.add("active");
+  }
+
+  _stopOnEvent(event) {
+    if (event !== undefined) {
+      event.preventDefault();
+      this.stopSliding();
     }
   }
 }
@@ -106,14 +153,16 @@ class ImageSlider {
 })();
 
 //ToDos:
-// x .) Magic Numbers variabilisieren
-// x .) über js die variablen im css deklarieren (slide, imagelist)
-// .) buttons verschönern (es soll schön ausschauen..)
+// x.) Magic Numbers variabilisieren
+// x.) über js die variablen im css deklarieren (slide, imagelist)
+// x.) buttons verschönern (es soll schön ausschauen..)
 // x.) die bulletpoints sind noch nicht da! bei aktivem bild richtigen bulletpoint highlighten,die bulletpoints unten im bild
-// .) die hrefs ('anker' --> #)
-// .) die buttuns links und rechts vom bild einblenden bei hover
+// x.) die hrefs ('anker' --> #)
+// x.) die buttuns links und rechts vom bild einblenden bei hover
 // x.) das bild dritteln : links und rechts sind die buttons/arrows , in der mitte ein play/pause button fürs sliden (togglen!)
-// x .) inital autoplay
+// x.) inital autoplay
 // x.) beim manuellen sliden wird autoplay auf pause geschalten
-// .) HTML wird nicht verändert
-// .) Arrows + Play/Pause sollen Icons sein.
+// x.) HTML wird nicht verändert
+// x.) Arrows + Play/Pause sollen Icons sein.
+// x.) bulletpoints weiß mit dunklem schatten und margin
+// x.) bulletpoints sollen klickbar sein, und zu richtigem slide/page sliden

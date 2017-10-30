@@ -34,16 +34,22 @@ li {
     position: absolute;
     left: 0;
     bottom: 0;
+    width: 100%;
     padding: 0.6rem 1rem;
-    display: flex; }
+    display: flex;
+    justify-content: center;
+    z-index: 20; }
   .slider .dot {
     border-radius: 50%;
     width: 1rem;
     height: 1rem;
     background: transparent;
-    border: 1px solid black; }
+    border: 1px solid white;
+    box-shadow: 0 0 12px black;
+    margin: 0 0.4rem;
+    cursor: pointer; }
     .slider .dot.active {
-      background: black; }
+      background: #f7f4f4; }
   .slider .leftArrow,
   .slider .rightArrow,
   .slider .play-pause {
@@ -53,19 +59,42 @@ li {
     bottom: 0;
     width: calc(100% / 3);
     z-index: 10;
-    background: rgba(0, 0, 0, 0.3);
     text-align: center;
-    border: solid 1px black; }
+    transition: all 0.4s ease-in-out; }
+    .slider .leftArrow:hover,
+    .slider .rightArrow:hover,
+    .slider .play-pause:hover {
+      background: rgba(0, 0, 0, 0.3); }
+      .slider .leftArrow:hover .fa,
+      .slider .rightArrow:hover .fa,
+      .slider .play-pause:hover .fa {
+        position: absolute;
+        display: block;
+        color: black;
+        top: 50%;
+        left: 0; }
   .slider .rightArrow {
     left: auto;
     right: 0; }
-    .slider .rightArrow::before {
-      content: "\f2b9"; }
+    .slider .rightArrow .fa {
+      right: 0; }
+  .slider .leftArrow {
+    right: auto;
+    left: 0; }
+    .slider .leftArrow .fa {
+      right: 0; }
+  .slider .fa {
+    color: black;
+    display: none; }
   .slider .play-pause {
-    left: calc(100% / 3); }
+    left: calc(100% / 3);
+    text-align: center; }
+    .slider .play-pause .fa {
+      left: 0;
+      right: 0; }
 
 .slider.with-js .imageList {
-  transition: all 300ms ease-in-out; }
+  transition: all 400ms ease-in-out; }
 
 /*
   Use this css-class on the slider section to animte the slider only with css.
