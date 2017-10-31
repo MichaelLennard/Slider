@@ -1,3 +1,6 @@
+$fa-font-path: "font-awesome/fonts";
+@import "font-awesome/scss/font-awesome";
+
 body {
   margin: 0 auto;
   max-width: 1200px;
@@ -62,15 +65,14 @@ li {
     box-shadow: 0 0 12px black;
     margin: 0 0.4rem;
     cursor: pointer;
+    transition: all 0.4s ease-in-out;
 
     &.active {
       background: rgb(247, 244, 244);
     }
   }
 
-  .leftArrow,
-  .rightArrow,
-  .play-pause {
+  .ui-element {
     position: absolute;
     top: 0;
     left: 0;
@@ -78,51 +80,59 @@ li {
     width: calc(100% / 3);
     z-index: 10;
     text-align: center;
+    text-indent: -9999px;
     transition: all 0.4s ease-in-out;
+    color: white;
+    opacity: 0;
+    background: rgba(0, 0, 0, 0.3);
 
+    &::before {
+      @include fa-icon();
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      font-size: 2rem;
+      text-indent: 0;
+    }
     &:hover {
-      background: rgba(0, 0, 0, 0.3);
-      .fa {
-        position: absolute;
-        display: block;
-        color: black;
-        top: 50%;
-        left: 0;
-      }
+      opacity: 1;
+    }
+  }
+
+  .rightArrow,
+  .leftArrow {
+    &::before {
+      font-size: 3rem;
     }
   }
 
   .rightArrow {
     left: auto;
     right: 0;
-    .fa {
-      right: 0;
+
+    &::before {
+      content: $fa-var-caret-right;
     }
   }
   .leftArrow {
     right: auto;
     left: 0;
-    .fa {
-      right: 0;
+
+    &::before {
+      content: $fa-var-caret-left;
     }
   }
-
-  .fa {
-    color: black;
-    display: none;
-  }
-
   .play-pause {
     left: calc(100% / 3);
     text-align: center;
-    .fa {
-      left: 0;
-      right: 0;
-    }
-  }
 
-  .playing {
-    // text-align: center;
+    &::before {
+      content: $fa-var-play;
+    }
+    &.playing::before {
+      content: $fa-var-pause;
+    }
   }
 }
 

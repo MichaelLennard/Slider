@@ -16,7 +16,7 @@ class ImageSlider {
       currentSlide: 0,
       step: 100 / this.dom.imageList.children.length,
       initautoplay: null,
-      interval: 1000
+      speed: parseInt(slider.getAttribute("data-speed"), 10)
     };
     const imageListWidth = this.vars.amount * 100;
 
@@ -36,18 +36,6 @@ class ImageSlider {
       dot.addEventListener("click", this.goToSlide.bind(this));
     });
 
-    // const rightArrowicon = document.createElement("i");
-    // rightArrowicon.className = "fa fa-caret-right 5-x";
-    // this.dom.arrowRight.appendChild(rightArrowicon);
-    // const leftArrowicon = document.createElement("i");
-    // leftArrowicon.className = "fa fa-caret-left 4-x";
-    // this.dom.arrowLeft.appendChild(leftArrowicon);
-    this.dom.arrowLeft.innerHTML =
-      '<i class="fa fa-caret-left fa-4x" aria-hidden="true"></i>';
-
-    this.dom.arrowRight.innerHTML =
-      '<i class="fa fa-caret-right fa-4x" aria-hidden="true"></i>';
-
     this.startSliding();
   }
 
@@ -59,10 +47,8 @@ class ImageSlider {
     if (!this.isPlaying()) {
       this.vars.initautoplay = setInterval(() => {
         this.slideRight();
-      }, this.vars.interval);
+      }, this.vars.speed);
       this.dom.play.classList.add("playing");
-      this.dom.play.innerHTML =
-        '<i class="fa fa-pause fa-3x" aria-hidden="true"></i>';
     }
   }
 
@@ -70,8 +56,6 @@ class ImageSlider {
     if (this.isPlaying()) {
       clearInterval(this.vars.initautoplay);
       this.dom.play.classList.remove("playing");
-      this.dom.play.innerHTML =
-        '<i class="fa fa-play fa-3x" aria-hidden="true"></i>';
     }
   }
 
@@ -166,3 +150,4 @@ class ImageSlider {
 // x.) Arrows + Play/Pause sollen Icons sein.
 // x.) bulletpoints weiß mit dunklem schatten und margin
 // x.) bulletpoints sollen klickbar sein, und zu richtigem slide/page sliden
+// x.) Optionen implementieren
