@@ -11,4 +11,4 @@
 // x.) html doesn't get change, everything happens in js
 // x.) bulletpoints have to be white with some dark shadow
 // x.) bulletpoints have to be clickable and have to slide to the correct image
-// x.) control the slidespeed 
+// x.) control the slidespeed via dataatrributes
