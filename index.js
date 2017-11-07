@@ -174,6 +174,7 @@ class ImageSlider {
   });
 })();
 
+//böasfhfkljhak
 //ToDos:
 // x.) Magic Numbers variabilisieren
 // x.) über js die variablen im css deklarieren (slide, imagelist)
