@@ -1,0 +1,14 @@
+// x.) no magic numbers
+// x.) nno duplicate code
+// x.) particular declaration of css attributes via JS
+// x.) buttons and arrows have to be icons
+// x.) highlight the bulletpoints to correct image
+// x.) prevent the anchor to jump on top off the page
+// x.) blend the buttons on hover
+// x.) the place of the conrol elements have to be thirds
+// x.) autoplay stops by manual sliding
+// x.) inital autoplay
+// x.) html doesn't get change, everything happens in js
+// x.) bulletpoints have to be white with some dark shadow
+// x.) bulletpoints have to be clickable and have to slide to the correct image
+// x.) control the slidespeed via dataatrributes
