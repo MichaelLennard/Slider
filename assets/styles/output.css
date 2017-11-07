@@ -2324,7 +2324,7 @@
   clip: auto; }
 
 body {
-  margin: 0 auto;
+  margin: 0 auto 5rem;
   max-width: 1200px; }
 
 a {
@@ -2363,7 +2363,8 @@ li {
     padding: 0.6rem 1rem;
     display: flex;
     justify-content: center;
-    z-index: 20; }
+    z-index: 20;
+    pointer-events: none; }
   .slider .dot {
     border-radius: 50%;
     width: 1rem;
@@ -2373,7 +2374,8 @@ li {
     box-shadow: 0 0 12px black;
     margin: 0 0.4rem;
     cursor: pointer;
-    transition: all 0.4s ease-in-out; }
+    transition: all 0.4s ease-in-out;
+    pointer-events: auto; }
     .slider .dot.active {
       background: #f7f4f4; }
   .slider .ui-element {
@@ -2419,7 +2421,8 @@ li {
       content: ""; }
   .slider .play-pause {
     left: calc(100% / 3);
-    text-align: center; }
+    text-align: center;
+    transition-delay: 100ms; }
     .slider .play-pause::before {
       content: ""; }
     .slider .play-pause.playing::before {
@@ -2432,20 +2435,43 @@ li {
   Use this css-class on the slider section to animte the slider only with css.
   FANCY!
 */
-.slider.with-css .leftArrow,
-.slider.with-css .rightArrow,
-.slider.with-css .bulletpoints {
-  display: none; }
 .slider.with-css .imageList {
+  width: 100%;
+  display: flex;
+  animation-iteration-count: infinite; }
+.slider.with-css[data-itemcount="3"] .imageList {
+  width: 300%;
+  animation-delay: 2s;
+  animation-duration: 6s;
+  animation-name: michimovesit-3; }
+.slider.with-css[data-itemcount="5"] .imageList {
+  width: 500%;
   animation-delay: 2s;
   animation-duration: 10s;
-  animation-name: michimovesit;
-  animation-iteration-count: infinite; }
+  animation-name: michimovesit-5; }
+.slider.with-css .slide {
+  float: none; }
+.slider.with-css .leftArrow,
+.slider.with-css .rightArrow,
+.slider.with-css .play-pause,
+.slider.with-css .bulletpoints {
+  display: none; }
 .slider.with-css.fast .imageList {
   animation-delay: 500ms;
   animation-duration: 3s; }
 
-@keyframes michimovesit {
+@keyframes michimovesit-3 {
+  0%,
+  90%,
+  100% {
+    transform: translateX(0); }
+  23.33%,
+  33.33% {
+    transform: translateX(-33.33%); }
+  56.66%,
+  66.66% {
+    transform: translateX(-66.66%); } }
+@keyframes michimovesit-5 {
   0%,
   90%,
   100% {
